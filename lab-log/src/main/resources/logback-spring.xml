@@ -82,7 +82,7 @@
                         {
                         "app_name":"${APPLICATION_NAME}",
                         "ip": "${SERVER_IP}",
-                        "trace_id":"%mdc{trace_id}",
+                        "trace_id":"%mdc{trace_id:-N/A}",
                         "level": "%level",
                         "thread": "%thread",
                         "logger": "%logger",
