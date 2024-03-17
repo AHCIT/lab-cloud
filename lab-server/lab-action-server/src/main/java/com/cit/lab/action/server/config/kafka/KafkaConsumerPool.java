@@ -89,7 +89,7 @@ public class KafkaConsumerPool<E> {
                 while (!queues.get(num).isEmpty() || !stopped) {
                     E task = null;
                     try {
-                        task = pollTask(threadName, bizName);
+                        task = pollTask(num);
                         if (Objects.nonNull(task)) {
                             //模拟业务处理耗时
                             bizService.accept(task);
@@ -124,11 +124,11 @@ public class KafkaConsumerPool<E> {
     /**
      * 根据线程名获取对应的待执行的任务
      *
-     * @param threadName 线程名称
+     * @param threadNum 线程号
      * @return 队列内的任务
      */
-    private E pollTask(String threadName, String bizName) {
-        int threadNum = Integer.parseInt(threadName.replace(KAFKA_CONSUMER_WORK_THREAD_PREFIX + bizName, ""));
+    private E pollTask(int threadNum) {
+//        int threadNum = Integer.parseInt(threadName.replace(KAFKA_CONSUMER_WORK_THREAD_PREFIX + bizName, ""));
         ConcurrentLinkedQueue<E> taskQueue = queues.get(threadNum);
         return taskQueue.poll();
     }
