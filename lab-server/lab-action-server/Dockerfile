@@ -22,7 +22,7 @@ ENV CONTAINER_MEMORY=8g
 ENV CPU_CORES=4
 
 # 为容器设置 CPU 和内存限制
-CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/lab-action-server-0.0.1-SNAPSHOT.jar"]
+CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/main.jar"]
 
 # 复制应用程序到容器中
-COPY target/lab-action-server-0.0.1-SNAPSHOT.jar /app/lab-action-server-0.0.1-SNAPSHOT.jar
+COPY target/lab-action-server-0.0.1-SNAPSHOT.jar /app/main.jar
