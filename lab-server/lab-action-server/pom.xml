@@ -10,7 +10,7 @@
 
     <artifactId>lab-action-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>lab-auth-server</name>
+    <name>lab-action-server</name>
     <description>lab-action-server</description>
 
     <dependencies>

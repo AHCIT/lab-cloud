@@ -2,25 +2,18 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name" defaultValue="app"/>
-    <conversionRule conversionWord="tid"
-                    converterClass="org.apache.skywalking.apm.toolkit.log.logback.v1.x.LogbackPatternConverter"/>
     <property name="LOG_HOME" value="logs"/>
     <springProperty name="APPLICATION_NAME" scope="context" source="spring.application.name"/>
     <springProperty name="SERVER_IP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
     <property name="CONSOLE_PATTERN"
-              value="%magenta([${SERVER_IP}]) %magenta(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}) %highlight([%tid]) %highlight(${LOG_LEVEL_PATTERN:-%p}) ${PID:- } --- %green([%thread]) %logger{39}.%method[%line] : %highlight(%m%n)"/>
+              value="%magenta([${SERVER_IP}]) %magenta(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}) %highlight([%mdc{trace_id:-N/A}]) %highlight(${LOG_LEVEL_PATTERN:-%p}) ${PID:- } --- %green([%thread]) %logger{39}.%method[%line] : %highlight(%m%n)"/>
     <property name="FILE_PATTERN"
-              value="[${SERVER_IP}] %d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} [%tid] ${LOG_LEVEL_PATTERN:-%p} ${PID:- } --- [%thread] %logger{39}.%method[%line] : %m%n"/>
+              value="[${SERVER_IP}] %d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} [%mdc{trace_id:N/A}] ${LOG_LEVEL_PATTERN:-%p} ${PID:- } --- [%thread] %logger{39}.%method[%line] : %m%n"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
-                <pattern>${CONSOLE_PATTERN}</pattern>
-            </layout>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${CONSOLE_PATTERN}</pattern>
+        </layout>
     </appender>
 
     <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -75,16 +68,6 @@
         </encoder>
     </appender>
 
-
-    <!--日志接入skywalking-->
-    <appender name="GRPC-LOG" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">
-        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%tid] [%thread] %-5level %logger{36} -%msg%n</Pattern>
-            </layout>
-        </encoder>
-    </appender>
-
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--可以访问的logstash日志收集端口-->
         <destination>192.168.1.11:4560</destination>
@@ -99,7 +82,7 @@
                         {
                         "app_name":"${APPLICATION_NAME}",
                         "ip": "${SERVER_IP}",
-                        "trace_id":"%tid",
+                        "trace_id":"%mdc{trace_id}",
                         "level": "%level",
                         "thread": "%thread",
                         "logger": "%logger",
@@ -119,7 +102,6 @@
         <appender-ref ref="FILE-INFO"/>
         <appender-ref ref="FILE-ERROR"/>
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="GRPC-LOG"/>
         <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>

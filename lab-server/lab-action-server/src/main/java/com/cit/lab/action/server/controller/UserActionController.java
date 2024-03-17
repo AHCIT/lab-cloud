@@ -40,7 +40,7 @@ public class UserActionController implements UserActionAPI {
     private RedisScript<String> getUserAction;
     @Resource
     private UserActionService userActionService;
-    private AtomicInteger integer = new AtomicInteger();
+    private final AtomicInteger integer = new AtomicInteger();
 
     @GetMapping("/doAction")
     public Object doAction(@RequestParam(name = "infoId") String infoId,
