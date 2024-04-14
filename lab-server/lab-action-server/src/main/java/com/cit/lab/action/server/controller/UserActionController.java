@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Random;
 
 
 /**
@@ -34,13 +34,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequestMapping("/lab/action")
 public class UserActionController implements UserActionAPI {
+    private final Random random = new Random();
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private RedisScript<String> getUserAction;
     @Resource
     private UserActionService userActionService;
-    private final AtomicInteger integer = new AtomicInteger();
 
     @GetMapping("/doAction")
     public Object doAction(@RequestParam(name = "infoId") String infoId,
@@ -54,9 +54,9 @@ public class UserActionController implements UserActionAPI {
             if (type != 0 && type != 1 && type != 2 && type != 3) {
                 return Result.ofFail("参数异常");
             }
-            infoId = "1";
+            infoId = Integer.toString(random.nextInt(2000));
             status = "1";
-            userId = Integer.toString(integer.incrementAndGet());
+            userId = Integer.toString(random.nextInt(50000));
             ActionDetailCO actionDetailCO = userActionService.doAction(userId, infoId, status, type);
             return Result.ofSuccess(actionDetailCO);
         } catch (DuplicateException e) {
@@ -84,10 +84,5 @@ public class UserActionController implements UserActionAPI {
             log.error("Fail to get action detail with userId {}, infoId {}!", userId, infoId);
             return Result.ofFail();
         }
-    }
-
-    @GetMapping("/checkRes")
-    public Object checkRes() {
-        return userActionService.checkRes();
     }
 }

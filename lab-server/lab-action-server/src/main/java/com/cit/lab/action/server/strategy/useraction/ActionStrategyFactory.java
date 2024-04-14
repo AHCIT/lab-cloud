@@ -1,6 +1,6 @@
 package com.cit.lab.action.server.strategy.useraction;
 
-import com.cit.lab.action.server.enums.ActionStrategyEnum;
+import com.cit.lab.api.action.enums.ActionStrategyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

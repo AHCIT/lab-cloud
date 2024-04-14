@@ -16,6 +16,7 @@
     <modules>
         <module>lab-basic</module>
         <module>lab-api</module>
+        <module>lab-mq</module>
         <module>lab-server</module>
         <module>lab-cloud-openapi</module>
         <module>lab-log</module>
@@ -33,6 +34,9 @@
         <spring-cloud-open-feign.version>3.1.3</spring-cloud-open-feign.version>
         <spring-cloud-loadbalancer.version>3.1.6</spring-cloud-loadbalancer.version>
         <spring-cloud-bootstrap.version>3.1.5</spring-cloud-bootstrap.version>
+        <druid-spring-boot-starter.version>1.1.17</druid-spring-boot-starter.version>
+        <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
+        <spring-jdbc.version>5.3.18</spring-jdbc.version>
         <nacos-client.version>1.4.4</nacos-client.version>
         <lombok.version>1.18.28</lombok.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
@@ -189,6 +193,23 @@
                 <groupId>com.squareup.okio</groupId>
                 <artifactId>okio</artifactId>
                 <version>${okio.version}</version>
+            </dependency>
+            <!-- 数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring-jdbc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

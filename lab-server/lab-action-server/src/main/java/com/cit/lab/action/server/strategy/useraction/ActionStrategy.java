@@ -1,9 +1,9 @@
 package com.cit.lab.action.server.strategy.useraction;
 
-import com.cit.lab.action.server.dto.ActionDTO;
-import com.cit.lab.action.server.enums.UserActionEnum;
 import com.cit.lab.action.server.exception.DuplicateException;
 import com.cit.lab.action.server.exception.ParamException;
+import com.cit.lab.api.action.dto.ActionDTO;
+import com.cit.lab.api.action.enums.UserActionEnum;
 
 /**
  * @Author: Richard

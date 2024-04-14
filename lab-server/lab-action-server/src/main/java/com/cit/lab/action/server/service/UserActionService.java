@@ -1,6 +1,5 @@
 package com.cit.lab.action.server.service;
 
-import com.cit.lab.action.server.dto.ActionDTO;
 import com.cit.lab.api.action.clientobject.ActionDetailCO;
 
 /**
@@ -14,16 +13,4 @@ import com.cit.lab.api.action.clientobject.ActionDetailCO;
  */
 public interface UserActionService {
     ActionDetailCO doAction(String userId, String infoId, String status, Integer type);
-
-    /**
-     * 处理行为数据
-     *
-     * @param actionDTO 行为数据
-     */
-    void solveRetry(ActionDTO actionDTO);
-
-    /**
-     * 核对请求数与处理数
-     */
-    String checkRes();
 }

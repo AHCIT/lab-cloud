@@ -1,9 +1,9 @@
 package com.cit.lab.action.server.strategy.useraction.action;
 
 
-import com.cit.lab.action.server.dto.ActionDTO;
-import com.cit.lab.action.server.enums.UserActionEnum;
 import com.cit.lab.action.server.strategy.useraction.ActionStrategy;
+import com.cit.lab.api.action.dto.ActionDTO;
+import com.cit.lab.api.action.enums.UserActionEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

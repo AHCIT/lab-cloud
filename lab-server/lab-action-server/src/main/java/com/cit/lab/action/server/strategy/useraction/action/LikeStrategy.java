@@ -1,9 +1,9 @@
 package com.cit.lab.action.server.strategy.useraction.action;
 
 
-import com.cit.lab.action.server.dto.ActionDTO;
-import com.cit.lab.action.server.enums.UserActionEnum;
 import com.cit.lab.action.server.strategy.useraction.ActionStrategy;
+import com.cit.lab.api.action.dto.ActionDTO;
+import com.cit.lab.api.action.enums.UserActionEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,8 +47,8 @@ public class LikeStrategy implements ActionStrategy {
         checkStatus(status, cache);
         stringRedisTemplate.execute(setAction, Arrays.asList(REDIS_LIKE_STATUS + userId, REDIS_LIKE_COUNT + infoId),
                 infoId, status);
-        log.info("Update like userId {} infoId {}, status {}, count {}!", userId, infoId, status,
-                stringRedisTemplate.opsForValue().get(REDIS_LIKE_COUNT + infoId));
+//        log.info("Update like userId {} infoId {}, status {}, count {}!", userId, infoId, status,
+//                stringRedisTemplate.opsForValue().get(REDIS_LIKE_COUNT + infoId));
         ActionDTO actionDTO = buildActionDTO(userId, infoId, status, UserActionEnum.LIKE);
         try {
             kafkaTemplate.send(actionTopic, objectMapper.writeValueAsString(actionDTO));
