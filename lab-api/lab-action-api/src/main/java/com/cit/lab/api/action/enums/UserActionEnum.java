@@ -1,4 +1,4 @@
-package com.cit.lab.action.server.enums;
+package com.cit.lab.api.action.enums;
 
 public enum UserActionEnum {
     LIKE("like", 0),

@@ -1,6 +1,6 @@
-package com.cit.lab.action.server.dto;
+package com.cit.lab.api.action.dto;
 
-import com.cit.lab.action.server.enums.UserActionEnum;
+import com.cit.lab.api.action.enums.UserActionEnum;
 import lombok.Builder;
 import lombok.Data;
 

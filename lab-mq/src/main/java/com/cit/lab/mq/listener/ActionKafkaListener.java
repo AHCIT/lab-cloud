@@ -1,10 +1,10 @@
-package com.cit.lab.action.server.mq;
+package com.cit.lab.mq.listener;
 
 
-import com.cit.lab.action.server.config.kafka.KafkaConsumerPool;
-import com.cit.lab.action.server.config.kafka.KafkaSortConsumerConfig;
-import com.cit.lab.action.server.dto.ActionDTO;
-import com.cit.lab.action.server.service.UserActionService;
+import com.cit.lab.api.action.dto.ActionDTO;
+import com.cit.lab.mq.config.KafkaConsumerPool;
+import com.cit.lab.mq.config.KafkaSortConsumerConfig;
+import com.cit.lab.mq.service.BizService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -38,7 +38,7 @@ import java.util.List;
 public class ActionKafkaListener extends AbstractConsumerSeekAware {
 
     @Resource
-    private UserActionService userActionService;
+    private BizService bizService;
     @Resource
     private ObjectMapper objectMapper;
     /**
@@ -62,7 +62,7 @@ public class ActionKafkaListener extends AbstractConsumerSeekAware {
     public void init() {
         KafkaSortConsumerConfig<ActionDTO> config = new KafkaSortConsumerConfig<>();
         config.setBizName(bizName);
-        config.setBizService(userActionService::solveRetry);
+        config.setBizService(bizService::solveRetry);
         config.setConcurrentSize(concurrentSize);
         kafkaConsumerPool = new KafkaConsumerPool<>(config);
     }

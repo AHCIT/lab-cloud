@@ -1,4 +1,4 @@
-package com.cit.lab.action.server.config.kafka;
+package com.cit.lab.mq.config;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
