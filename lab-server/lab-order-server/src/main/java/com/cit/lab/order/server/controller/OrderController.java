@@ -1,5 +1,6 @@
 package com.cit.lab.order.server.controller;
 
+import com.cit.basic.dto.PageInfo;
 import com.cit.basic.dto.Result;
 import com.cit.lab.api.auth.clientobject.UserCO;
 import com.cit.lab.api.order.client.OrderAPI;
@@ -70,5 +71,20 @@ public class OrderController implements OrderAPI {
     @Override
     public Result<Void> create(OrderCO orderCO) {
         return Result.ofSuccess(null, "创建订单成功");
+    }
+
+    @Override
+    public Result<Void> update(OrderCO orderCO) {
+        return null;
+    }
+
+    @Override
+    public Result<Void> deleteById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Result<PageInfo<OrderCO>> list() {
+        return null;
     }
 }

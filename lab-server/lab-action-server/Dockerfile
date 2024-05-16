@@ -19,7 +19,7 @@ ENV JAVA_OPTS="-Xms4g -Xmx4g \
 ENV CONTAINER_MEMORY=8g
 
 # 设置CPU核心数
-ENV CPU_CORES=4
+ENV CPU_CORES=8
 
 # 为容器设置 CPU 和内存限制
 CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/main.jar"]
