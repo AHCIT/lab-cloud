@@ -21,8 +21,8 @@ ENV CONTAINER_MEMORY=8g
 # 设置CPU核心数
 ENV CPU_CORES=4
 
-# 为容器设置 CPU 和内存限制
-CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/main.jar"]
-
 # 复制应用程序到容器中
 COPY target/lab-mq-0.0.1-SNAPSHOT.jar /app/main.jar
+
+# 为容器设置 CPU 和内存限制
+CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/main.jar"]
