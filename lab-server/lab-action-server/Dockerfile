@@ -19,7 +19,7 @@ ENV JAVA_OPTS="-Xms4g -Xmx4g \
 ENV CONTAINER_MEMORY=8g
 
 # 设置CPU核心数
-ENV CPU_CORES=4
+ENV CPU_CORES=8
 
 # 复制应用程序到容器中
 COPY target/lab-action-server-0.0.1-SNAPSHOT.jar /app/main.jar
