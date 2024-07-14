@@ -16,6 +16,7 @@ public interface UserActionAPI {
     Object doAction(@RequestParam(name = "infoId") String infoId,
                     @RequestParam(name = "userId") String userId,
                     @RequestParam(name = "status") String status,
+                    @RequestParam(name = "sleep", defaultValue = "0") Long sleep,
                     @RequestParam(name = "type", defaultValue = "1") Integer type);
 
     @GetMapping("/getActionDetail")

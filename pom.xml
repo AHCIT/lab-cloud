@@ -38,7 +38,7 @@
         <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
         <spring-jdbc.version>5.3.18</spring-jdbc.version>
         <nacos-client.version>1.4.4</nacos-client.version>
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <logstash-logback-encoder.version>6.2</logstash-logback-encoder.version>
         <gson.version>2.10.1</gson.version>

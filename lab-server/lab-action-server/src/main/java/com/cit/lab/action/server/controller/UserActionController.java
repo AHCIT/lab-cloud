@@ -46,6 +46,7 @@ public class UserActionController implements UserActionAPI {
     public Object doAction(@RequestParam(name = "infoId") String infoId,
                            @RequestParam(name = "userId") String userId,
                            @RequestParam(name = "status") String status,
+                           @RequestParam(name = "sleep", defaultValue = "0") Long sleep,
                            @RequestParam(name = "type", defaultValue = "1") Integer type) {
         try {
             if (!"1".equals(status) && !"0".equals(status)) {
@@ -58,6 +59,9 @@ public class UserActionController implements UserActionAPI {
             status = "1";
             userId = Integer.toString(random.nextInt(50000));
             ActionDetailCO actionDetailCO = userActionService.doAction(userId, infoId, status, type);
+            if (sleep != 0L) {
+                Thread.sleep(sleep);
+            }
             return Result.ofSuccess(actionDetailCO);
         } catch (DuplicateException e) {
             log.error("Duplicate action with userId {}, infoId {}, status {}", userId, infoId, status, e);
