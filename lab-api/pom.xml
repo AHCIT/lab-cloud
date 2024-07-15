@@ -17,5 +17,6 @@
         <module>lab-order-api</module>
         <module>lab-pay-api</module>
         <module>lab-action-api</module>
+        <module>lab-sys-api</module>
     </modules>
 </project>
