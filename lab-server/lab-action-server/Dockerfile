@@ -13,7 +13,13 @@ ENV JAVA_OPTS="-Xms4g -Xmx4g \
                -Dotel.metrics.exporter=none \
                -Dotel.logs.exporter=none \
                -Dotel.service.name=lab-action-server \
-               -Dotel.exporter.jaeger.endpoint=http://192.168.1.11:14250"
+               -Dotel.exporter.jaeger.endpoint=http://192.168.1.11:14250 \
+               -Dcom.sun.management.jmxremote \
+               -Dcom.sun.management.jmxremote.port=8019 \
+               -Dcom.sun.management.jmxremote.authenticate=false \
+               -Dcom.sun.management.jmxremote.ssl=false \
+               -Djava.rmi.server.hostname=192.168.1.2 \
+               -Dcom.sun.management.jmxremote.rmi.port=8019"
 
 # 设置容器内存限制
 ENV CONTAINER_MEMORY=8g
