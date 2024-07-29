@@ -44,8 +44,7 @@ The project architecture includes the following components:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/microservices-project.git
-   cd microservices-project
+   git clone https://github.com/AHCIT/lab-cloud.git
 2. Build and run the services,use command like
    ```shell
    docker buildx build --platform linux/amd64 -t lab-action-server:0.0.1-SNAPSHOT .    
