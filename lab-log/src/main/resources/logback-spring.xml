@@ -34,9 +34,32 @@
             <CleanHistoryOnStart>true</CleanHistoryOnStart>
         </rollingPolicy>
         <!--日志输出编码格式化 -->
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>${FILE_PATTERN}</pattern>
+        <!--        <encoder>-->
+        <!--            <charset>UTF-8</charset>-->
+        <!--            <pattern>${FILE_PATTERN}</pattern>-->
+        <!--        </encoder>-->
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>Asia/Shanghai</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "app":"${APPLICATION_NAME}",
+                        "ip": "${SERVER_IP}",
+                        "traceId":"%mdc{trace_id:-N/A}",
+                        "level": "%level",
+                        "thread": "%thread",
+                        "logger": "%logger",
+                        "method": "%method",
+                        "line": "%line",
+                        "message": "%message",
+                        "stackTrace": "%exception{15}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
         </encoder>
     </appender>
 
@@ -62,9 +85,32 @@
             <CleanHistoryOnStart>true</CleanHistoryOnStart>
         </rollingPolicy>
         <!--日志输出编码格式化 -->
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>${FILE_PATTERN}</pattern>
+        <!--        <encoder>-->
+        <!--            <charset>UTF-8</charset>-->
+        <!--            <pattern>${FILE_PATTERN}</pattern>-->
+        <!--        </encoder>-->
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>Asia/Shanghai</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "app":"${APPLICATION_NAME}",
+                        "ip": "${SERVER_IP}",
+                        "traceId":"%mdc{trace_id:-N/A}",
+                        "level": "%level",
+                        "thread": "%thread",
+                        "logger": "%logger",
+                        "method": "%method",
+                        "line": "%line",
+                        "message": "%message",
+                        "stackTrace": "%exception{15}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
         </encoder>
     </appender>
 
@@ -89,7 +135,7 @@
                         "method": "%method",
                         "line": "%line",
                         "message": "%message",
-                        "stack_trace": "%exception{10}"
+                        "stack_trace": "%exception{15}"
                         }
                     </pattern>
                 </pattern>
