@@ -13,6 +13,10 @@
     <name>lab-auth-server</name>
     <description>lab-auth-server</description>
 
+    <properties>
+        <spring-boot-starter-security.version>2.7.15</spring-boot-starter-security.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.cit.lab</groupId>
@@ -70,6 +74,20 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!--安全框架springsecurity依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot-starter-security.version}</version>
         </dependency>
     </dependencies>
 
