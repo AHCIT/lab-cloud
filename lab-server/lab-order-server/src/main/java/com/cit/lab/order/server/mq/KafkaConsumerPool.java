@@ -1,4 +1,4 @@
-package com.cit.lab.order.server.kafka;
+package com.cit.lab.order.server.mq;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

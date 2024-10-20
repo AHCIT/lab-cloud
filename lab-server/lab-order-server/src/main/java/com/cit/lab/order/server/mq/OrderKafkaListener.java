@@ -1,4 +1,4 @@
-package com.cit.lab.order.server.kafka;
+package com.cit.lab.order.server.mq;
 
 
 import com.cit.lab.api.order.clientobject.OrderCO;
