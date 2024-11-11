@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.cit.operation.platform</groupId>
+    <artifactId>lab-dubbo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>lab-dubbo</name>
+    <description>Demo project for Apache Dubbo</description>
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <dubbo.version>3.2.10</dubbo.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <logstash-logback-encoder.version>6.2</logstash-logback-encoder.version>
+        <micrometer-tracing-bridge-otel.version>1.2.2</micrometer-tracing-bridge-otel.version>
+        <opentelemetry-exporter-otlp.version>1.34.1</opentelemetry-exporter-otlp.version>
+        <dubbo-log.version>0.0.1-SNAPSHOT</dubbo-log.version>
+        <nacos-client.version>2.2.1</nacos-client.version>
+        <lombok.version>1.18.34</lombok.version>
+    </properties>
+
+    <modules>
+        <module>dubbo-log</module>
+        <module>lab-order</module>
+        <module>lab-good</module>
+        <module>lab-tcp</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bridge-otel</artifactId>
+                <version>${micrometer-tracing-bridge-otel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-otlp</artifactId>
+                <version>${opentelemetry-exporter-otlp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cit.operation.platform</groupId>
+                <artifactId>dubbo-log</artifactId>
+                <version>${dubbo-log.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

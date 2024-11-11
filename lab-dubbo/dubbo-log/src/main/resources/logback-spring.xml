@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <springProperty name="APPLICATION_NAME" scope="context" source="dubbo.application.name" defaultValue="app"/>
+    <property name="LOG_HOME" value="logs"/>
+    <property name="CONSOLE_PATTERN"
+              value="%magenta(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}) %highlight([%mdc{trace_id:-N/A}]) %highlight(${LOG_LEVEL_PATTERN:-%p}) ${PID:- } --- %green([%thread]) %logger{39}.%method[%line] : %highlight(%m%n)"/>
+    <property name="FILE_PATTERN"
+              value="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} [%mdc{trace_id:N/A}] ${LOG_LEVEL_PATTERN:-%p} ${PID:- } --- [%thread] %logger{39}.%method[%line] : %m%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${CONSOLE_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则 如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
+        的日志改名为今天的日期。即，<File> 的日志都是当天的。 -->
+        <File>${LOG_HOME}/info.${APPLICATION_NAME}.log</File>
+        <!--滚动策略，按照时间滚动 TimeBasedRollingPolicy -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间 -->
+            <FileNamePattern>
+                ${LOG_HOME}/info.${APPLICATION_NAME}.%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <!--单个日志文件最大大小，当文件达到该大小则触发截断（以及压缩）-->
+            <maxFileSize>200MB</maxFileSize>
+            <!--只保留最近30篇日志 -->
+            <maxHistory>30</maxHistory>
+            <!-- 启动时把不符合MaxHistory的文件删掉 -->
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+        </rollingPolicy>
+        <!--日志输出编码格式化 -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--如果只是想要 Error 级别的日志，那么需要过滤一下，默认是 info 级别的，ThresholdFilter -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则 如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
+        的日志改名为今天的日期。即，<File> 的日志都是当天的。 -->
+        <File>${LOG_HOME}/error.${APPLICATION_NAME}.log</File>
+        <!--滚动策略，按照时间滚动 TimeBasedRollingPolicy -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间 -->
+            <FileNamePattern>
+                ${LOG_HOME}/error.${APPLICATION_NAME}.%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <!--单个日志文件最大大小，当文件达到该大小则触发截断（以及压缩）-->
+            <maxFileSize>200MB</maxFileSize>
+            <!--只保留最近30篇日志 -->
+            <maxHistory>30</maxHistory>
+            <!-- 启动时把不符合MaxHistory的文件删掉 -->
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+        </rollingPolicy>
+        <!--日志输出编码格式化 -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--可以访问的logstash日志收集端口-->
+        <destination>192.168.1.11:4560</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>Asia/Shanghai</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "app_name":"${APPLICATION_NAME}",
+                        "trace_id":"%mdc{trace_id:-N/A}",
+                        "level": "%level",
+                        "thread": "%thread",
+                        "logger": "%logger",
+                        "method": "%method",
+                        "line": "%line",
+                        "message": "%message",
+                        "stack_trace": "%exception{15}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="FILE-INFO"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+</configuration>
+
