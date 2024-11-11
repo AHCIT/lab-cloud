@@ -15,6 +15,7 @@
         <module>lab-auth-server</module>
         <module>lab-order-server</module>
         <module>lab-action-server</module>
+        <module>lab-tcp-server</module>
     </modules>
     <dependencyManagement>
         <dependencies>
