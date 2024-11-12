@@ -10,48 +10,53 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-public class NettyTcpServer {
+@Component
+public class NettyTcpServer implements CommandLineRunner {
 
-    public static void main(String[] args) {
-        // 1. 创建两个 EventLoopGroup，一个用于接收连接，一个用于处理连接
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+    @Override
+    public void run(String... args) {
+        new Thread(() -> { // 1. 创建两个 EventLoopGroup，一个用于接收连接，一个用于处理连接
+            EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+            EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-        try {
-            // 2. 创建 ServerBootstrap 对象
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup, workerGroup)
-                    // 3. 设置通道类型为 NioServerSocketChannel
-                    .channel(NioServerSocketChannel.class)
-                    // 4. 设置处理程序
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        protected void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
-                            ch.pipeline().addLast(new IdleStateHandler(0, 0, 300));
-                            ch.pipeline().addLast(new ServerHandler());
-                        }
-                    })
-                    // 5. 配置连接参数
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childOption(ChannelOption.TCP_NODELAY, true)
-                    .childOption(ChannelOption.ALLOW_HALF_CLOSURE, true)
-                    .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                    .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(32 * 1024, 64 * 1024));
+            try {
+                // 2. 创建 ServerBootstrap 对象
+                ServerBootstrap bootstrap = new ServerBootstrap();
+                bootstrap.group(bossGroup, workerGroup)
+                        // 3. 设置通道类型为 NioServerSocketChannel
+                        .channel(NioServerSocketChannel.class)
+                        // 4. 设置处理程序
+                        .childHandler(new ChannelInitializer<SocketChannel>() {
+                            @Override
+                            protected void initChannel(SocketChannel ch) {
+                                ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
+                                ch.pipeline().addLast(new IdleStateHandler(0, 0, 300));
+                                ch.pipeline().addLast(new ServerHandler());
+                            }
+                        })
+                        // 5. 配置连接参数
+                        .childOption(ChannelOption.SO_KEEPALIVE, true)
+                        .childOption(ChannelOption.TCP_NODELAY, true)
+                        .childOption(ChannelOption.ALLOW_HALF_CLOSURE, true)
+                        .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                        .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(32 * 1024, 64 * 1024));
 
-            // 6. 绑定端口并启动服务器
-            ChannelFuture future = bootstrap.bind(8088).sync();
+                // 6. 绑定端口并启动服务器
+                ChannelFuture future = bootstrap.bind(8088).sync();
 
-            // 等待服务器关闭
-            future.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
-            log.error("服务器启动失败", e);
-        } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
+                // 等待服务器关闭
+                future.channel().closeFuture().sync();
+            } catch (InterruptedException e) {
+                log.error("服务器启动失败", e);
+            } finally {
+                bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
+            }
+        }).start();
     }
 
     static class ServerHandler extends ChannelInboundHandlerAdapter {
