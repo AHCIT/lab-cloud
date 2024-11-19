@@ -1,5 +1,6 @@
 package com.cit.platform.tcp.server.init;
 
+import com.cit.platform.tcp.server.config.DemoConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -10,6 +11,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +19,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class NettyTcpServer implements CommandLineRunner {
 
+    private final DemoConfig demoConfig;
+
+    @Autowired
+    public NettyTcpServer(DemoConfig demoConfig) {
+        this.demoConfig = demoConfig;
+    }
+
     @Override
     public void run(String... args) {
         new Thread(() -> { // 1. 创建两个 EventLoopGroup，一个用于接收连接，一个用于处理连接
-            EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-            EventLoopGroup workerGroup = new NioEventLoopGroup();
-
-            try {
+            try (EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+                 EventLoopGroup workerGroup = new NioEventLoopGroup()) {
                 // 2. 创建 ServerBootstrap 对象
                 ServerBootstrap bootstrap = new ServerBootstrap();
                 bootstrap.group(bossGroup, workerGroup)
@@ -46,15 +53,14 @@ public class NettyTcpServer implements CommandLineRunner {
                         .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(32 * 1024, 64 * 1024));
 
                 // 6. 绑定端口并启动服务器
-                ChannelFuture future = bootstrap.bind(8088).sync();
+                ChannelFuture future = bootstrap.bind(demoConfig.getPort()).sync();
+                log.info("Tcp server started on port ===> {}", demoConfig.getPort());
 
                 // 等待服务器关闭
                 future.channel().closeFuture().sync();
             } catch (InterruptedException e) {
                 log.error("服务器启动失败", e);
-            } finally {
-                bossGroup.shutdownGracefully();
-                workerGroup.shutdownGracefully();
+                Thread.currentThread().interrupt();
             }
         }).start();
     }

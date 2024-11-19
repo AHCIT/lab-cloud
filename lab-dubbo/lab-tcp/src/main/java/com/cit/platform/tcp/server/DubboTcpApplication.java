@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableDubbo
-public class LabTcpApplication {
+public class DubboTcpApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LabTcpApplication.class, args);
+        SpringApplication.run(DubboTcpApplication.class, args);
     }
 
 }

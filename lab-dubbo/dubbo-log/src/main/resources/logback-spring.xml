@@ -66,40 +66,40 @@
         </encoder>
     </appender>
 
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!--可以访问的logstash日志收集端口-->
-        <destination>192.168.1.11:4560</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>Asia/Shanghai</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "app_name":"${APPLICATION_NAME}",
-                        "trace_id":"%mdc{trace_id:-N/A}",
-                        "level": "%level",
-                        "thread": "%thread",
-                        "logger": "%logger",
-                        "method": "%method",
-                        "line": "%line",
-                        "message": "%message",
-                        "stack_trace": "%exception{15}"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+<!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        &lt;!&ndash;可以访问的logstash日志收集端口&ndash;&gt;-->
+<!--        <destination>192.168.1.11:4560</destination>-->
+<!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+<!--            <providers>-->
+<!--                <timestamp>-->
+<!--                    <timeZone>Asia/Shanghai</timeZone>-->
+<!--                </timestamp>-->
+<!--                <pattern>-->
+<!--                    <pattern>-->
+<!--                        {-->
+<!--                        "app_name":"${APPLICATION_NAME}",-->
+<!--                        "trace_id":"%mdc{trace_id:-N/A}",-->
+<!--                        "level": "%level",-->
+<!--                        "thread": "%thread",-->
+<!--                        "logger": "%logger",-->
+<!--                        "method": "%method",-->
+<!--                        "line": "%line",-->
+<!--                        "message": "%message",-->
+<!--                        "stack_trace": "%exception{15}"-->
+<!--                        }-->
+<!--                    </pattern>-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
 
     <root level="INFO">
         <appender-ref ref="FILE-INFO"/>
         <appender-ref ref="FILE-ERROR"/>
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="LOGSTASH"/>
+<!--        <appender-ref ref="LOGSTASH"/>-->
     </root>
 </configuration>
 

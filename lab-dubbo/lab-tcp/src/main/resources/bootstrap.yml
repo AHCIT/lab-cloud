@@ -1,0 +1,24 @@
+dubbo:
+  application:
+    logger: slf4j
+    name: ${spring.application.name}
+    qos-port: 2228
+    metadata-type: local
+  registry:
+    address: nacos://localhost:8848?namespace=06dd5361-9d44-4532-ab22-08140799af90
+    parameters:
+      namespace: 06dd5361-9d44-4532-ab22-08140799af90
+    use-as-metadata-center: false
+  protocol:
+    name: dubbo
+    port: 50058
+spring:
+  application:
+    name: tcp-dubbo-provider
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848 # 例如：localhost:8848
+        namespace: 06dd5361-9d44-4532-ab22-08140799af90 # 如果需要跨namespace获取数据，请参照Nacos的多客户端实例配置
+        group: DEFAULT_GROUP # 默认分组，可以根据需要更改
+        file-extension: yaml # 指定配置文件的格式为yaml

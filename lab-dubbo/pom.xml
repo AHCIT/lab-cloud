@@ -20,6 +20,8 @@
         <dubbo-log.version>0.0.1-SNAPSHOT</dubbo-log.version>
         <nacos-client.version>2.2.1</nacos-client.version>
         <lombok.version>1.18.34</lombok.version>
+        <cloud-nacos-config.version>2021.0.5.0</cloud-nacos-config.version>
+        <cloud-bootstrap.version>4.1.4</cloud-bootstrap.version>
     </properties>
 
     <modules>
@@ -74,6 +76,16 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${cloud-nacos-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${cloud-bootstrap.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
