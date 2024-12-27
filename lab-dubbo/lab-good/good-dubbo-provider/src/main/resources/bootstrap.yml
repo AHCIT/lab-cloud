@@ -22,3 +22,5 @@ spring:
         namespace: 06dd5361-9d44-4532-ab22-08140799af90 # 如果需要跨namespace获取数据，请参照Nacos的多客户端实例配置
         group: DEFAULT_GROUP # 默认分组，可以根据需要更改
         file-extension: yaml # 指定配置文件的格式为yaml
+  profiles:
+    active: dev
