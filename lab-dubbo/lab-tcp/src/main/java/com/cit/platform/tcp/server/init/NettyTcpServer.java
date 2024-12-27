@@ -28,9 +28,11 @@ public class NettyTcpServer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
         new Thread(() -> { // 1. 创建两个 EventLoopGroup，一个用于接收连接，一个用于处理连接
-            try (EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-                 EventLoopGroup workerGroup = new NioEventLoopGroup()) {
+            EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+            EventLoopGroup workerGroup = new NioEventLoopGroup();
+            try {
                 // 2. 创建 ServerBootstrap 对象
                 ServerBootstrap bootstrap = new ServerBootstrap();
                 bootstrap.group(bossGroup, workerGroup)

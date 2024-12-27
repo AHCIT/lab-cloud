@@ -64,10 +64,10 @@ public class UserActionController implements UserActionAPI {
             }
             return Result.ofSuccess(actionDetailCO);
         } catch (DuplicateException e) {
-            log.error("Duplicate action with userId {}, infoId {}, status {}", userId, infoId, status, e);
+            log.debug("Duplicate action with userId {}, infoId {}, status {}", userId, infoId, status, e);
             return Result.ofFail(e.getMsg());
         } catch (ConcurrentException e) {
-            log.error("Fail to get lock with userId {}, infoId {}, status {}", userId, infoId, status, e);
+            log.debug("Fail to get lock with userId {}, infoId {}, status {}", userId, infoId, status, e);
             return Result.ofFail(e.getMsg());
         } catch (ParamException e) {
             log.error("Fail to do action with wrong params userId {}, infoId {}, status {}", userId, infoId, status, e);

@@ -8,8 +8,6 @@
     </parent>
 
     <artifactId>spring-log</artifactId>
-    <packaging>jar</packaging>
-
     <name>spring-log</name>
 
     <properties>
